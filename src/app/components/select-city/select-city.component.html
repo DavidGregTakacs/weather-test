@@ -1,0 +1,19 @@
+<div>
+  <span>City: </span>
+  <select [formControl]="citySelector">
+    <option *ngFor="let city of availableCities" [ngValue]="city">{{ city }}</option>
+  </select>
+</div>
+
+<ng-container *ngIf="error$ | async as error; else forecastTemplate">
+  Something went wrong. Here is the error message from the API:
+  <code>
+    {{ error.message }}
+  </code>
+</ng-container>
+
+<ng-template #forecastTemplate>
+  <ng-container *ngIf="forecastForSelectedCity$ | async as forecastForSelectedCity">
+    <app-forecast [source]="forecastForSelectedCity"></app-forecast>
+  </ng-container>
+</ng-template>

@@ -1,0 +1,17 @@
+<div class="flex forecast-boxes" *ngIf="source">
+  <div *ngFor="let day of source.list | separateRawListToDays | async" class="flex-1">
+    {{ day[0].dt_txt | date:'EEEE, MMMM d' }}
+    <div *ngFor="let time of day" class="day">
+      <div>{{ time.dt_txt | date:'shortTime' }}</div>
+      <ng-container *ngFor="let condition of time.weather">
+        <div>
+          <img [src]="'http://openweathermap.org/img/w/' + condition.icon + '.png'"
+               [alt]="condition.main">
+        </div>
+        <div>{{ condition.description }}</div>
+      </ng-container>
+      <div>{{ time.main.temp | number:'1.0-0' }} &#8451;</div>
+      <div>{{ time.wind.speed }} mph</div>
+    </div>
+  </div>
+</div>
